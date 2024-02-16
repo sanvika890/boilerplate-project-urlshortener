@@ -22,14 +22,16 @@ app.get('/api/hello', function(req, res) {
 const urls=[];
 
 app.post("/api/shorturl",function(req,res){
-  const url = req.body.url
-  dns.lookup(url,(err,data,family)=>{
-    if(err===null){
-      const random = Math.floor(Math.random(0,1)*100)
-      urls.push({original_url : url, short_url : random})
-      res.json({original_url : url, short_url : random})
-    }else{
+  let url = req.body.url.replace(/\/*$/, '');
+  let validUrl = url.replace(/^https:\/\/(www.)?/, '');
+  dns.lookup(validUrl,(err,data,family)=>{
+    if(err){
       res.json({ error: 'invalid url' })
+    }else{
+      const random = Math.floor(Math.random(0,1)*100)
+      urls.push({original_url : req.body.url, short_url : random})
+      res.json({original_url : req.body.url, short_url : random})
+
     }
   })
 })
