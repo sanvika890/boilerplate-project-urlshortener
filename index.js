@@ -22,9 +22,9 @@ app.get('/api/hello', function(req, res) {
 const urls=[];
 
 app.post("/api/shorturl",function(req,res){
-  let url = req.body.url
+  let url = new URL(req.body.url).hostname
   dns.lookup(url,(err,data,family)=>{
-    if(err){
+    if(err !== null){
       res.json({ error: 'invalid url' })
     }else{
       const random = Math.floor(Math.random(0,1)*100)
