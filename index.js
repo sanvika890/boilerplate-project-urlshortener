@@ -1,21 +1,18 @@
 require('dotenv').config();
-const dns = require('node:dns')
 const express = require('express');
 const cors = require('cors');
-let bodyParser = require("body-parser");
-let app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-// Basic Configuration
-const port = process.env.port || 3000;
-
+const app = express();
+const bodyParser = require('body-parser');
+const dns = require('dns');
+const port = process.env.PORT || 3000;
 
 app.use(cors());
-
-app.use('/public', express.static(`${process.cwd()}/public`));
+app.use('/public', express.static(`${__dirname}/public`));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/views/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 // Your first API endpoint
