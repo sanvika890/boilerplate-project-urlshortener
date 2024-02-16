@@ -22,9 +22,8 @@ app.get('/api/hello', function(req, res) {
 const urls=[];
 
 app.post("/api/shorturl",function(req,res){
-  let url = req.body.url.replace(/\/*$/, '');
-  let validUrl = url.replace(/^https:\/\/(www.)?/, '');
-  dns.lookup(validUrl,(err,data,family)=>{
+  let url = req.body.url
+  dns.lookup(url,(err,data,family)=>{
     if(err){
       res.json({ error: 'invalid url' })
     }else{
