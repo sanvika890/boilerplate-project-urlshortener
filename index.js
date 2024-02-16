@@ -7,7 +7,7 @@ let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Basic Configuration
-const port =  3000;
+const port = process.env.port || 3000;
 
 
 app.use(cors());
